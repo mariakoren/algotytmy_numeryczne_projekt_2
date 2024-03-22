@@ -9,20 +9,18 @@ def alg1(matrix):
         for j in range(i + 1, rows):
             if abs(matrix[j][i]) > abs(matrix[max_row][i]):
                 max_row = j
-        matrix[i], matrix[max_row] = matrix[max_row], matrix[i]
 
+        matrix[i], matrix[max_row] = matrix[max_row], matrix[i]
         for j in range(i + 1, rows):
-            if matrix[i][i] != 0:
-                factor = matrix[j][i] / matrix[i][i]
-                for k in range(i, cols):
-                    matrix[j][k] -= factor * matrix[i][k]
+            factor = matrix[j][i] / matrix[i][i]
+            for k in range(i, cols):
+                matrix[j][k] -= factor * matrix[i][k]
 
     solution = [0] * rows
     for i in range(rows - 1, -1, -1):
-        if matrix[i][i] != matrix[i][i]:
-            solution[i] = matrix[i][cols - 1] / matrix[i][i]
-            for j in range(i - 1, -1, -1):
-                matrix[j][cols - 1] -= matrix[j][i] * solution[i]
+        solution[i] = matrix[i][cols - 1] / matrix[i][i]
+        for j in range(i - 1, -1, -1):
+            matrix[j][cols - 1] -= matrix[j][i] * solution[i]
 
     return solution
     
@@ -37,10 +35,18 @@ def print_matrix(matrix):
 
       
 
-macierz = [[1.2, 2.6, -0.1, 1.5, 13.15],
-           [4.5, 9.8, -0.4, 5.7, 49.84],
-           [0.1, -0.1, -0.3, -3.5, -14.08],
-           [4.5, -5.2, 4.2, -3.4, -46.51]]
+# macierz = [[1.2, 2.6, -0.1, 1.5, 13.15],
+#            [4.5, 9.8, -0.4, 5.7, 49.84],
+#            [0.1, -0.1, -0.3, -3.5, -14.08],
+#            [4.5, -5.2, 4.2, -3.4, -46.51]]
+    
+macierz = [[1, 0, 0, 0, 0, 0, 1],
+           [-0.5, 1, -0.5, 0, 0, 0, 0],
+           [0, -0.5, 1, -0.5, 0, 0, 0],
+           [0, 0, -0.5, 1, -0.5, 0, 0],
+           [0, 0, 0, -0.5, 1, -0.5, 0],
+           [0, 0, 0, 0, 0, 1, 0]]
+
 res = alg1(macierz)
 print(res)
 
