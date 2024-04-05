@@ -1,67 +1,60 @@
+import numpy as np
+import matplotlib.pyplot as plt
 import networkx as nx
-import random
 
-def generate_park_graph(num_crossroads, crossroads, road_lengths):
+def generate_transition_matrix(n, d, adjacency_list):
+    transition_matrix = np.zeros((n, n))
+
+    for i in range(n):
+        neighbors = adjacency_list[i]
+        num_neighbors = len(neighbors)
+        for neighbor in neighbors:
+            transition_matrix[i][neighbor] = 1 / num_neighbors
+    
+    return transition_matrix
+
+def generate_equations(transition_matrix):
+    n = len(transition_matrix)
+    equations = []
+
+    for i in range(n):
+        eq = []
+        for j in range(n):
+            if i == j:
+                eq.append(1 - transition_matrix[i][j])
+            else:
+                eq.append(-transition_matrix[i][j])
+        equations.append(eq)
+
+    return equations
+
+def draw_graph(n, adjacency_list):
     G = nx.Graph()
-    for i in range(num_crossroads):
-        G.add_node(crossroads[i])
-    for i in range(num_crossroads):
-        for j in range(i+1, num_crossroads):
-            G.add_edge(crossroads[i], crossroads[j], weight=road_lengths[i][j])
-            G.add_edge(crossroads[j], crossroads[i], weight=road_lengths[j][i])
-    return G
+    for i in range(n):
+        for neighbor in adjacency_list[i]:
+            G.add_edge(i+1, neighbor+1)
+    pos = nx.spring_layout(G)  # Ustawienie pozycji węzłów na grafie
+    nx.draw(G, pos, with_labels=True, node_size=700, node_color='skyblue', font_size=10, font_weight='bold')  # Rysowanie grafu
+    plt.title("Graf skrzyżowań w parku")
+    plt.savefig("graf.png")  # Zapisanie grafu jako plik obrazu
 
-def find_shortest_path(G, start, end):
-    try:
-        path = nx.shortest_path(G, source=start, target=end, weight='weight')
-        return path
-    except nx.NetworkXNoPath:
-        return None
-
-def calculate_probability_of_success(G, path, osk_crossroad):
-    num_success = 0
-    num_trials = 10000
-    
-    for _ in range(num_trials):
-        current_crossroad = path[0]
-        for i in range(1, len(path)):
-            neighbors = list(G.neighbors(current_crossroad))
-            if osk_crossroad in neighbors:
-                neighbors.remove(osk_crossroad)  # Exclude the OSK crossroad
-            if path[i-1] in neighbors:  # Check if the previous crossroad is in neighbors
-                neighbors.remove(path[i-1])  # Exclude the previous crossroad
-            if neighbors:  # Check if there are any neighbors left
-                next_crossroad = random.choice(neighbors)
-                current_crossroad = next_crossroad
-                if current_crossroad == path[i]:
-                    num_success += 1
-                    break
-    
-    probability = num_success / num_trials
-    return probability
-
-
-
-# Example usage
-if __name__ == "__main__":
-    num_crossroads = 5
-    crossroads = ['v1', 'v2', 'v3', 'v4', 'v5']
-    road_lengths = [
-        [0, 10, 20, 0, 0],
-        [10, 0, 15, 25, 0],
-        [20, 15, 0, 10, 0],
-        [0, 25, 10, 0, 30],
-        [0, 0, 0, 30, 0]
+def main():
+    n = 4
+    d = [
+        [0, 4, 6, 4],
+        [4, 0, 4, 0],
+        [6, 4, 0, 4],
+        [4, 0, 4, 0]
     ]
-    start_crossroad = 'v1'
-    end_crossroad = 'v5'
-    osk_crossroad = 'v3'  # Example OSK crossroad
     
-    G = generate_park_graph(num_crossroads, crossroads, road_lengths)
-    shortest_path = find_shortest_path(G, start_crossroad, end_crossroad)
-    if shortest_path:
-        print("Shortest path:", shortest_path)
-        probability = calculate_probability_of_success(G, shortest_path, osk_crossroad)
-        print("Probability of success:", probability)
-    else:
-        print("There is no path from start to end.")
+    adjacency_list = [[1, 2, 3], [0, 2], [0, 1, 3], [0, 2]]
+    
+    transition_matrix = generate_transition_matrix(n, d, adjacency_list)
+    equations = generate_equations(transition_matrix)
+    draw_graph(n, adjacency_list)
+    print("Układ równań:")
+    for eq in equations:
+        print(eq)
+
+if __name__ == "__main__":
+    main()
