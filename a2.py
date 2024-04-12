@@ -48,7 +48,10 @@ def gauss_elimination_with_partial_pivoting(matrix_1, matrix_2):
     for answer in range(n):
         print(f"x{answer} is {x[answer]}")
 
-variable_matrix = np.array([[1, 1, 3], [0, 1, 3], [-1, 3, 0]])
-constant_matrix = np.array([[1], [3], [5]])
 
-gauss_elimination_with_partial_pivoting(variable_matrix, constant_matrix)
+# Trzeba zakomentować żeby dało się importować bez wywoływania kodu poniżej
+
+# variable_matrix = np.array([[1, 1, 3], [0, 1, 3], [-1, 3, 0]])
+# constant_matrix = np.array([[1], [3], [5]])
+
+# gauss_elimination_with_partial_pivoting(variable_matrix, constant_matrix)

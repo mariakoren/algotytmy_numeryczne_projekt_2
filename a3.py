@@ -15,13 +15,13 @@ def gauss_seidl(matrix, vector, max_iter=1000, tol=1e-6):
         x = x_new
     return x
 
+# Trzeba zakomentować żeby dało się importować bez wywoływania kodu poniżej
+# test_matrix = np.array([[10, -1, 2, 0],
+#                         [-1, 11, -1, 3],
+#                         [2, -1, 10, -1],
+#                         [0.0, 3, -1, 8]])
 
-test_matrix = np.array([[10, -1, 2, 0],
-                        [-1, 11, -1, 3],
-                        [2, -1, 10, -1],
-                        [0.0, 3, -1, 8]])
+# test_vector = np.array([6, 25, -11, 15])
+# test_result = gauss_seidl(test_matrix, test_vector)
 
-test_vector = np.array([6, 25, -11, 15])
-test_result = gauss_seidl(test_matrix, test_vector)
-
-print(test_result)
+# print(test_result)
