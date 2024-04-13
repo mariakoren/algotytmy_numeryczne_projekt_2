@@ -15,9 +15,7 @@ def performanceTest(function, *args):
     stop = time.time()
     runTime = stop - start
 
-    ## DO WYBORU CZY MA ZWRACAC TYLKO CZASY CZY TEZ WYNIKI
     return (result, runTime)
-    # return runTime
 
 def testRuntime(cases, functions):
     results = {}
@@ -76,8 +74,24 @@ def test():
     ]
     V3 =[28.2, 20.1, 21.7, 27.6, 34.6, 27.7, 38.1, 19.7, 22.2, 20.8]
 
-    testResults = testRuntime([[(M1, V1), (M2, V2), (M3, V3)], [], [(np.array(M1), np.array(V1)), (np.array(M2), np.array(V2)), (np.array(M3), np.array(V3))]], [gauss, gauss_elimination_partial_pivoting, gauss_seidl])
+    testResults = testRuntime([[(M1, V1), (M2, V2), (M3, V3)], [(np.array(M1), np.array(V1)), (np.array(M2), np.array(V2)), (np.array(M3), np.array(V3))], [(np.array(M1), np.array(V1)), (np.array(M2), np.array(V2)), (np.array(M3), np.array(V3))]], [gauss, gauss_elimination_partial_pivoting, gauss_seidl])
 
-    print(testResults)
+    for key, values in testResults.items():
+        results = []
+        times = []
+
+        for elem in values:
+            results.append(elem[0])
+            times.append(elem[1])
+
+        avg_time = sum(times) / len(times)
+
+        print("\n", "-----------------------------------------------------------------------")
+        print(f"Algorytm {key}:")
+        print("Wyniki: ")
+        print(results, "\n")
+        print("Czasy wykonania: ")
+        print(times, "\n")
+        print("Średni czas wykonania: ", avg_time)
 
 test()
