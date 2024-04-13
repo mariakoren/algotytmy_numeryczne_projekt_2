@@ -1,6 +1,6 @@
 # algorytm eliminacji Gaussa bez wyboru elementu podstawowego
 
-def alg1(matrix, vector):
+def gauss(matrix, vector):
     for i in range(len(matrix)):
         matrix[i].append(vector[i])
 

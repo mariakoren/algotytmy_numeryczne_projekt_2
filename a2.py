@@ -1,61 +1,45 @@
 import numpy as np
 
-# JESZCZE TROCHE TO POZMIENIAM
 
-def gauss_elimination_with_partial_pivoting(matrix_1, matrix_2):
+def gauss_elimination_partial_pivoting(matrix, vector):
+    m_set = np.concatenate((matrix, vector.reshape(-1, 1)), axis=1)
+    vector_len = len(vector)
 
-    # if matrix_1.shape[0] != matrix_1.shape[1]:
-    #     print("ERROR: Square matrix not given!")
-    #     return
-    # if matrix_2.shape[1] > 1 or matrix_2.shape[0] != matrix_1.shape[0]:
-    #     print("ERROR: Constant vector incorrectly sized")
-    #     return
+    for i in range(vector_len - 1):
+        pivot = np.argmax(abs(m_set[i:, i])) + i
+        if pivot != i:
+            m_set[[i, pivot]] = m_set[[pivot, i]]
 
-    n=len(matrix_2)
-    m=n-1
-    i=0
-    j=i-1
-    x=np.zeros(n)
-    new_line="/n"
+        for y in range(i + 1, vector_len):
+            line = m_set[y, i] / m_set[i, i]
+            m_set[y] = m_set[y].astype(np.float64) - line * m_set[i].astype(np.float64)
 
-    augmented_matrix = np.concatenate((matrix_1, matrix_2,), axis=1, dtype=float)
-    # print(f"the initial augmented matrix is: {new_line}{augmented_matrix}")
-    # print("solving for the upper-triangular matrix:")
-    
-    
-    #partial pivoting:
-    while i<n:
-        max_row_index = np.argmax(np.abs(augmented_matrix[i:, i])) + i
-        augmented_matrix[[i, max_row_index]] = augmented_matrix[[max_row_index, i]]
-        
-        if augmented_matrix[i][i]==0.0:
-            print("Divide by zero error")
-            return
-        for j in range(i+1,n):
-            scaling_factor=augmented_matrix[j][i]/augmented_matrix[i][i]
-            augmented_matrix[j]=augmented_matrix[j]-(scaling_factor * augmented_matrix[i])
-            # print(augmented_matrix)
-            
-        i=i+1
-    
-        x[m]=augmented_matrix[m][n]/augmented_matrix[m][m]
-        for k in range(n-2,-1,-1):
-            x[k]=augmented_matrix[k][n]
-            for j in range(k+1,n):
-                x[k]=x[k]/augmented_matrix[k][k]
-    
-    # print("The following x vector matrix solves the above augmented matrix:")
-    result = []
-    for answer in range(n):
-        # print(f"x{answer} is {x[answer]}")
-        result.append(x[answer])
-    return result
-    
+    solution = [0] * vector_len
+    for i in range(vector_len - 1, -1, -1):
+        solution[i] = (m_set[i][vector_len] - np.dot(m_set[i, :vector_len], solution)) / m_set[i][i]
 
+    return solution
 
-# Trzeba zakomentować żeby dało się importować bez wywoływania kodu poniżej
+# # DO TESTU
+# A = np.array([[1, 2, 1],
+#             [3, 1, -2],
+#             [2, -3, 4]])
+# B = np.array([6, 5, 1])
 
-# variable_matrix = np.array([[1, 1, 3], [0, 1, 3], [-1, 3, 0]])
-# constant_matrix = np.array([[1], [3], [5]])
+# M3 = np.array([
+#         [ 8.0,  2.1,  0.5,  0.3,  0.4,  0.1,  0.6,  0.7,  0.9,  0.5],
+#         [ 1.2,  6.0,  0.6,  1.1,  0.8,  0.8,  0.2,  0.1,  0.5,  1.3], 
+#         [ 1.1,  0.5,  7.0,  0.5,  0.9,  0.1,  0.8,  0.2,  1.2,  0.3],
+#         [ 0.3,  0.9,  0.7,  9.0,  1.2,  1.1,  0.3,  0.6,  0.1,  0.2],
+#         [ 0.6,  2.2,  0.4,  0.7, 10.0,  0.9,  0.4,  0.1,  0.2,  0.6],
+#         [ 0.5,  0.3,  0.8,  0.8,  0.9,  8.0,  0.8,  1.3,  0.2,  1.1],
+#         [ 0.9,  0.9,  0.7,  0.1,  0.8,  0.8, 12.0,  0.8,  0.5,  0.8],
+#         [ 0.6,  0.5,  0.2,  0.4,  0.7,  0.4,  0.3,  5.0,  0.7,  0.2],
+#         [ 0.1,  0.3,  0.6,  0.8,  0.1,  0.6,  0.9,  0.6,  7.0,  0.9],
+#         [ 0.3,  0.2,  0.8,  0.4,  1.2,  0.3,  0.4,  0.3,  0.4,  6.0] 
+#     ])
+# V3 = np.array([28.2, 20.1, 21.7, 27.6, 34.6, 27.7, 38.1, 19.7, 22.2, 20.8])
 
-# gauss_elimination_with_partial_pivoting(variable_matrix, constant_matrix)
+# test = gauss_elimination_partial_pivoting(M3, V3)
+
+# print(test)
