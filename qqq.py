@@ -1,30 +1,6 @@
-import numpy as np
-import matplotlib.pyplot as plt
 import networkx as nx
-
-def generate_transition_matrix(n,  adjacency_list):
-    transition_matrix = np.zeros((n, n))
-    for i in range(n):
-        neighbors = adjacency_list[i]
-        num_neighbors = len(neighbors)
-        for neighbor in neighbors:
-            transition_matrix[i][neighbor] = 1 / num_neighbors
-    return transition_matrix
-
-
-
-def generate_equations(transition_matrix):
-    n = len(transition_matrix)
-    equations = []
-    for i in range(n):
-        eq = []
-        for j in range(n):
-            if i == j:
-                eq.append(1 - transition_matrix[i][j])
-            else:
-                eq.append(-transition_matrix[i][j])
-        equations.append(eq)
-    return equations
+import matplotlib.pyplot as plt
+import numpy as np
 
 def build_park(input_matrix):
     G = nx.Graph()
@@ -46,11 +22,9 @@ def adjacency_matrix(G):
     nodes = sorted(G.nodes())
     n = len(nodes)
     adj_matrix = np.zeros((n, n), dtype=int)
-
     for i, node in enumerate(nodes):
         for neighbor in sorted(G.neighbors(node)):
             adj_matrix[i][nodes.index(neighbor)] = 1
-
     return adj_matrix
 
 def correct_adjacency(matrix):
@@ -72,20 +46,13 @@ def read_data(filename):
         row[2]-=1
     return data
 
-def main():
-    input_matrix= read_data("dane.txt")
-    park_graph = build_park(input_matrix)
-    nx.draw(park_graph, with_labels=True)
-    # plt.show()
-    plt.savefig("graf-1.png") 
+input_matrix= read_data("dane.txt")
+park_graph = build_park(input_matrix)
+nx.draw(park_graph, with_labels=True)
+# plt.show()
+plt.savefig("graf-1.png") 
 
-    adj_matrix, n = correct_adjacency(adjacency_matrix(park_graph))
-    transition_matrix = generate_transition_matrix(n, adj_matrix)
-    equations = generate_equations(transition_matrix)
+adj_matrix = correct_adjacency(adjacency_matrix(park_graph))
+# print("Macierz sąsiedztwa:")
+# print(adj_matrix)
 
-    print("Układ równań:")
-    for eq in equations:
-        print(eq)
-
-if __name__ == "__main__":
-    main()
