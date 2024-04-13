@@ -112,5 +112,19 @@ def main():
     matrix, vector = prepare_data(equations, osk, wyjscie)
     return matrix, vector
 
+
+def prepare_for_monte_carlo():
+    input_matrix= read_data("dane.txt")
+    park_graph = build_park(input_matrix)
+
+    adj_matrix, n = correct_adjacency(adjacency_matrix(park_graph))
+    slownik = {indeks: wartosc for indeks, wartosc in enumerate(adj_matrix)}
+    osk = read_data2("dane2.txt")[0]
+    wyjscie = read_data2("dane2.txt")[1]
+
+    return slownik, osk, wyjscie
+    
+
 # if __name__ == "__main__":
 #     main()
+prepare_for_monte_carlo()
