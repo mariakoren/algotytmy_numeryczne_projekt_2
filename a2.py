@@ -4,12 +4,12 @@ import numpy as np
 
 def gauss_elimination_with_partial_pivoting(matrix_1, matrix_2):
 
-    if matrix_1.shape[0] != matrix_1.shape[1]:
-        print("ERROR: Square matrix not given!")
-        return
-    if matrix_2.shape[1] > 1 or matrix_2.shape[0] != matrix_1.shape[0]:
-        print("ERROR: Constant vector incorrectly sized")
-        return
+    # if matrix_1.shape[0] != matrix_1.shape[1]:
+    #     print("ERROR: Square matrix not given!")
+    #     return
+    # if matrix_2.shape[1] > 1 or matrix_2.shape[0] != matrix_1.shape[0]:
+    #     print("ERROR: Constant vector incorrectly sized")
+    #     return
 
     n=len(matrix_2)
     m=n-1
@@ -19,8 +19,8 @@ def gauss_elimination_with_partial_pivoting(matrix_1, matrix_2):
     new_line="/n"
 
     augmented_matrix = np.concatenate((matrix_1, matrix_2,), axis=1, dtype=float)
-    print(f"the initial augmented matrix is: {new_line}{augmented_matrix}")
-    print("solving for the upper-triangular matrix:")
+    # print(f"the initial augmented matrix is: {new_line}{augmented_matrix}")
+    # print("solving for the upper-triangular matrix:")
     
     
     #partial pivoting:
@@ -34,7 +34,7 @@ def gauss_elimination_with_partial_pivoting(matrix_1, matrix_2):
         for j in range(i+1,n):
             scaling_factor=augmented_matrix[j][i]/augmented_matrix[i][i]
             augmented_matrix[j]=augmented_matrix[j]-(scaling_factor * augmented_matrix[i])
-            print(augmented_matrix)
+            # print(augmented_matrix)
             
         i=i+1
     
@@ -44,9 +44,13 @@ def gauss_elimination_with_partial_pivoting(matrix_1, matrix_2):
             for j in range(k+1,n):
                 x[k]=x[k]/augmented_matrix[k][k]
     
-    print("The following x vector matrix solves the above augmented matrix:")
+    # print("The following x vector matrix solves the above augmented matrix:")
+    result = []
     for answer in range(n):
-        print(f"x{answer} is {x[answer]}")
+        # print(f"x{answer} is {x[answer]}")
+        result.append(x[answer])
+    return result
+    
 
 
 # Trzeba zakomentować żeby dało się importować bez wywoływania kodu poniżej

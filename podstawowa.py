@@ -81,6 +81,7 @@ def read_data2(filename):
     return numbers
 
 def prepare_data(matrix, osk, exit):
+    vector = []
     for i in range(len(matrix)):
         if i == osk -1 or i == exit -1:
             for j in range(len(matrix[i])):
@@ -88,10 +89,10 @@ def prepare_data(matrix, osk, exit):
                     matrix[i][j] = 0
     for i in range(len(matrix)):
         if i == exit-1:
-            matrix[i].append(1)
+            vector.append(1)
         else:
-            matrix[i].append(0)
-    return matrix
+           vector.append(0)
+    return matrix, vector
             
 
             
@@ -108,8 +109,8 @@ def main():
     equations = generate_equations(transition_matrix)
     osk = read_data2("dane2.txt")[0]
     wyjscie = read_data2("dane2.txt")[1]
-    after_prepare = prepare_data(equations, osk, wyjscie)
-    return after_prepare
+    matrix, vector = prepare_data(equations, osk, wyjscie)
+    return matrix, vector
 
 # if __name__ == "__main__":
 #     main()

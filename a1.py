@@ -1,6 +1,9 @@
 # algorytm eliminacji Gaussa bez wyboru elementu podstawowego
 
-def alg1(matrix):
+def alg1(matrix, vector):
+    for i in range(len(matrix)):
+        matrix[i].append(vector[i])
+
     rows = len(matrix)
     cols = len(matrix[0])
 
@@ -24,14 +27,13 @@ def alg1(matrix):
 
     return solution
     
-
-
-def print_matrix(matrix):
-    for i in range(len(matrix)):
-        for j in range(len(matrix[i])):
-            print(matrix[i][j], end =" ")
-        print()
-    print()
+    
+# def print_matrix(matrix):
+#     for i in range(len(matrix)):
+#         for j in range(len(matrix[i])):
+#             print(matrix[i][j], end =" ")
+#         print()
+#     print()
 
 
 # Trzeba zakomentować żeby dało się importować bez wywoływania kodu poniżej
