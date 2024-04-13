@@ -72,20 +72,44 @@ def read_data(filename):
         row[2]-=1
     return data
 
+def read_data2(filename):
+    with open(filename, 'r') as file:
+        lines = file.readlines()
+    numbers = []
+    for line in lines:
+        numbers.append(int(line.strip()))
+    return numbers
+
+def prepare_data(matrix, osk, exit):
+    for i in range(len(matrix)):
+        if i == osk -1 or i == exit -1:
+            for j in range(len(matrix[i])):
+                if matrix[i][j]!=1:
+                    matrix[i][j] = 0
+    for i in range(len(matrix)):
+        if i == exit-1:
+            matrix[i].append(1)
+        else:
+            matrix[i].append(0)
+    return matrix
+            
+
+            
+
+
 def main():
     input_matrix= read_data("dane.txt")
     park_graph = build_park(input_matrix)
     nx.draw(park_graph, with_labels=True)
     # plt.show()
     plt.savefig("graf-1.png") 
-
     adj_matrix, n = correct_adjacency(adjacency_matrix(park_graph))
     transition_matrix = generate_transition_matrix(n, adj_matrix)
     equations = generate_equations(transition_matrix)
+    osk = read_data2("dane2.txt")[0]
+    wyjscie = read_data2("dane2.txt")[1]
+    after_prepare = prepare_data(equations, osk, wyjscie)
+    return after_prepare
 
-    print("Układ równań:")
-    for eq in equations:
-        print(eq)
-
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
