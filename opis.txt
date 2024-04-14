@@ -1,0 +1,4 @@
+W zadaniu przyjęto taki sposób wczytywania danych:
+
+1) w pliku dane.txt się znajdują w kolejnych wierszach co 3 liczby, pierwsze 2 oznaczają numery skrzyżowań, a 3 ilość kroków między nimi
+2) w pliku dane2.txt w pierwszym wierszu numer skrzyżowania dla osk, w drugim dla wyjścia, w trzecim dla startu
