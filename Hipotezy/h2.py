@@ -2,7 +2,7 @@
 import numpy as np
 import os, sys
 
-# Sciezka do folderu rodzica
+# Sciezka do folderu rodzicac
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from podstawowa import *
 from a3 import gauss_seidl
@@ -19,7 +19,7 @@ def calculate_err(result, seidl):
 
     return mean_abs_error, max_abs_error, mean_percentage_abs_err
 
-def test_h3(matrix, vector):
+def test_h2(matrix, vector):
     seidl_propabilities = gauss_seidl(np.array(matrix), np.array(vector))
     result = np.linalg.solve(np.array(matrix), np.array(vector))
     print("\nWyniki dla algorytmu Gaussa Seidla: \n")
@@ -36,4 +36,4 @@ def test_h3(matrix, vector):
     print(f"Max różnica wyników: {max_abs_err}")
 
 matrix, vector = main()
-test_h3(matrix, vector)
+test_h2(matrix, vector)
