@@ -119,12 +119,20 @@ def prepare_for_monte_carlo():
 
     adj_matrix, n = correct_adjacency(adjacency_matrix(park_graph))
     slownik = {indeks: wartosc for indeks, wartosc in enumerate(adj_matrix)}
+    nowy_slownik = {}
+    nowy_slownik = {}
+    for key, values in slownik.items():
+        nowy_slownik[key + 1] = [val + 1 for val in values]
     osk = read_data2("dane2.txt")[0]
     wyjscie = read_data2("dane2.txt")[1]
+    start = read_data2("dane2.txt")[2]
+    # print(slownik)
+    # print()
+    # print(nowy_slownik)
 
-    return slownik, osk, wyjscie
+    return nowy_slownik, osk, wyjscie, start
     
 
 # if __name__ == "__main__":
 #     main()
-prepare_for_monte_carlo()
+# prepare_for_monte_carlo()
