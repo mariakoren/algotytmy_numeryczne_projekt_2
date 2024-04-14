@@ -120,9 +120,9 @@ def prepare_for_monte_carlo():
     nowy_slownik = {}
     for key, values in slownik.items():
         nowy_slownik[key + 1] = [val + 1 for val in values]
-    osk = read_data2("dane2.txt")[0]
-    wyjscie = read_data2("dane2.txt")[1]
-    start = read_data2("dane2.txt")[2]
+    osk = read_data2("rozszerzenie/dane2.txt")[0]
+    wyjscie = read_data2("rozszerzenie/dane2.txt")[1]
+    start = read_data2("rozszerzenie/dane2.txt")[2]
     # print(slownik)
     # print()
     # print(nowy_slownik)
