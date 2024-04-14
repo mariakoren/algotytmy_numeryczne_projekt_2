@@ -94,10 +94,6 @@ def prepare_data(matrix, osk, exit):
            vector.append(0)
     return matrix, vector
             
-
-            
-
-
 def main():
     input_matrix= read_data("dane.txt")
     park_graph = build_park(input_matrix)
@@ -133,6 +129,6 @@ def prepare_for_monte_carlo():
     return nowy_slownik, osk, wyjscie, start
     
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
 # prepare_for_monte_carlo()
