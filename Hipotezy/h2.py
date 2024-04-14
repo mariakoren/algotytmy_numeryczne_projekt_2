@@ -12,7 +12,12 @@ def calculate_err(result, seidl):
     mean_abs_error = np.mean(np.abs(errors))
     max_abs_error = np.max(np.abs(errors))
 
-    return mean_abs_error, max_abs_error
+    # jesli jakis element w result = 0 - wywala go z obu zbiorow
+    non_zero_res = result[result != 0]
+    non_zero_errs = errors[result != 0]
+    mean_percentage_abs_err = np.mean(np.abs(non_zero_errs) / np.abs(non_zero_res)) * 100
+
+    return mean_abs_error, max_abs_error, mean_percentage_abs_err
 
 def test_h3(matrix, vector):
     seidl_propabilities = gauss_seidl(np.array(matrix), np.array(vector))
@@ -22,11 +27,12 @@ def test_h3(matrix, vector):
     print("\nWyniki wbudowanej funkcji: \n")
     print(result)
 
-    mean_abs_err, max_abs_err = calculate_err(result, seidl_propabilities)
+    mean_abs_err, max_abs_err, mean_percentage = calculate_err(result, seidl_propabilities)
 
     print("\n------------------------------------")
     print("\nRóżnice wartości między algorytmami:")
     print(f"Średnia różnica wyników: {mean_abs_err}")
+    print(f"Średnia różnica wyników procentowo: {mean_percentage} %")
     print(f"Max różnica wyników: {max_abs_err}")
 
 matrix, vector = main()
